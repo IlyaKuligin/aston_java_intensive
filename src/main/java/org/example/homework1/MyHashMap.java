@@ -54,7 +54,7 @@ public class MyHashMap<K, V> {
         if (size >= table.length * loadFactor) {
             resize();
         }
-        int index = getIndex(key);
+        int index = getIndex(key, table.length);
         Node<K, V> head = table[index];
 
         Node<K, V> current = head;
@@ -78,7 +78,7 @@ public class MyHashMap<K, V> {
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null");
         }
-        int index = getIndex(key);
+        int index = getIndex(key, table.length);
         Node<K, V> current = table[index];
 
         while (current != null) {
@@ -95,7 +95,7 @@ public class MyHashMap<K, V> {
             throw new IllegalArgumentException("Key cannot be null");
         }
 
-        int index = getIndex(key);
+        int index = getIndex(key, table.length);
         Node<K, V> current = table[index];
         Node<K, V> prev = null;
 
@@ -115,10 +115,10 @@ public class MyHashMap<K, V> {
         return null;
     }
 
-    private int getIndex(K key) {
+    private int getIndex(K key, int capacity) {
         int hashCode = key.hashCode();
         int positiveHashCode = Math.abs(hashCode);
-        return positiveHashCode % table.length;
+        return positiveHashCode % capacity;
     }
 
     private void resize() {
@@ -129,7 +129,7 @@ public class MyHashMap<K, V> {
             Node<K, V> current = head;
             while (current != null) {
                 Node<K, V> next = current.next;
-                int newIndex = getIndex(current.key);
+                int newIndex = getIndex(current.key, newCapacity);
                 current.next = newTable[newIndex];
                 newTable[newIndex] = current;
                 current = next;

@@ -69,4 +69,20 @@ class MyHashMapTest {
         assertEquals("one", intMap.get(1));
         assertEquals("two", intMap.get(2));
     }
+
+    @Test
+    void testMassInsertion() { // Тест на массовую вставку
+        MyHashMap<Integer, Integer> massMap = new MyHashMap<>();
+
+        for (int i = 0; i < 100; i++) {
+            massMap.put(i, i * 10);
+        }
+
+        for (int i = 0; i < 100; i++) {
+            assertEquals(i * 10, massMap.get(i));
+        }
+
+        assertNull(massMap.get(100));
+        assertNull(massMap.get(-1));
+    }
 }
